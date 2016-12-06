@@ -1,2 +1,7 @@
 packages/
 paket.exe
+.fake/
+build/
+deploy/
+test/
+tools/
