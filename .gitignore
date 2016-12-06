@@ -5,3 +5,7 @@ build/
 deploy/
 test/
 tools/
+TestResult.xml
+src/**/.vs/
+src/**/bin/
+src/**/obj/
