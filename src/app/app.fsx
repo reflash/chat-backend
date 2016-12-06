@@ -39,11 +39,11 @@ let app =
   choose
     [ GET >=> choose
                 [
-                  // path "/api/login" >=> jsonMime >=> OK (toString <| toJson { foo = "foo" })
+                  path "/api/login" >=> jsonMime >=> OK (toString <| toJson { foo = "foo" })
                   // pathScan "/api/json/%d" (fun n -> jsonMime >=> OK (jsonText n))*)
                 ]
       POST >=> choose
-                [ path "/api/login" >=> jsonMime >=> OK (fromString >> fromJson) ] ]
+                [ //path "/api/login" >=> jsonMime >=> OK (fromString >> fromJson) ] ]
 
 
 startWebServer config app

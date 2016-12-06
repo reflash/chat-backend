@@ -1,0 +1,6 @@
+C:\Users\daniil.ekzaryan\Documents\Atom\FSharp\chat-backend\src\app\obj\Release\Chat-Backend.fsprojResolveAssemblyReference.cache
+C:\Users\daniil.ekzaryan\Documents\Atom\FSharp\chat-backend\build\Chat_Backend.dll
+C:\Users\daniil.ekzaryan\Documents\Atom\FSharp\chat-backend\build\Chat_Backend.pdb
+C:\Users\daniil.ekzaryan\Documents\Atom\FSharp\chat-backend\build\Chat_Backend.XML
+C:\Users\daniil.ekzaryan\Documents\Atom\FSharp\chat-backend\src\app\obj\Release\Chat_Backend.dll
+C:\Users\daniil.ekzaryan\Documents\Atom\FSharp\chat-backend\src\app\obj\Release\Chat_Backend.pdb
