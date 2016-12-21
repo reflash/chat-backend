@@ -14,6 +14,8 @@ let testDir   = @"./test/"
 let deployDir = @"./deploy/"
 let packagesDir = @"./packages"
 
+let elmDir = @"./src/"
+
 // version info
 let version = "0.2"  // or retrieve from CI server
 
@@ -58,10 +60,15 @@ Target "NUnitTest" (fun _ ->
 //  - docker ps -a
 //  - docker run reflash/chat /bin/sh -c "cd /root/chat; bundle exec rake test"
 
-Target "Zip" (fun _ ->
+Target "Copy" (fun _ ->
     !! (buildDir + "\**\*.*")
         -- "*.zip"
         |> Zip buildDir (deployDir + "chat-backend." + version + ".zip")
+)
+
+Target "CompileElm" (fun _ ->
+    Shell.Exec("elm-make", "src/Main.elm --output build/Main.js --yes", "src/frontend")
+    |> ignore
 )
 
 
@@ -71,4 +78,5 @@ Target "Zip" (fun _ ->
   ==> "CompileApp"
   ==> "CompileTest"
   ==> "NUnitTest"
-  ==> "Zip"
+  ==> "CompileElm"
+  ==> "Copy"

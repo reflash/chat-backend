@@ -4,4 +4,4 @@
 open Fake
 open Fake.AssemblyInfoFile
 
-RunTargetOrDefault "Zip"
+RunTargetOrDefault "Copy"
