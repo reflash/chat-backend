@@ -6,7 +6,9 @@ deploy/
 test/
 tools/
 log/
+elm-stuff/
 TestResult.xml
 src/**/.vs/
 src/**/bin/
 src/**/obj/
+.DS_Store

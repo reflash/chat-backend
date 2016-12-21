@@ -39,7 +39,7 @@ Target "CompileApp" (fun _ ->
 )
 
 Target "CompileTest" (fun _ ->
-    !! @"src\test\**\*.fsproj"
+    !! @"src\tests\**\*.fsproj"
       |> MSBuildDebug testDir "Build"
       |> Log "TestBuild-Output: "
 )
