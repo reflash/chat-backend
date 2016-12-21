@@ -13,5 +13,5 @@ if [ $exit_code -ne 0 ]; then
 fi
 
 [ ! -e build.fsx ] && mono .paket/paket.exe update
-[ ! -e build.fsx ] && mono packages/build/FAKE/tools/FAKE.exe init.fsx
-mono packages/build/FAKE/tools/FAKE.exe $@ --fsiargs -d:MONO build.fsx
+[ ! -e build.fsx ] && mono packages/FAKE/tools/FAKE.exe init.fsx
+mono packages/FAKE/tools/FAKE.exe $@ --fsiargs -d:MONO build.fsx

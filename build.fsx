@@ -1,5 +1,5 @@
 // include Fake lib
-#r @"packages\FAKE\tools\FakeLib.dll"
+#r @"FakeLib.dll"
 
 open Fake
 open Fake.AssemblyInfoFile
@@ -8,10 +8,10 @@ open Fake.Testing.NUnit3
 RestorePackages()
 
 // Directories
-let buildDir  = @".\build\"
-let testDir   = @".\test\"
-let deployDir = @".\deploy\"
-let packagesDir = @".\packages"
+let buildDir  = @"./build/"
+let testDir   = @"./test/"
+let deployDir = @"./deploy/"
+let packagesDir = @"./packages"
 
 // version info
 let version = "0.2"  // or retrieve from CI server
