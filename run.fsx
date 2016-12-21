@@ -3,7 +3,7 @@
 open Fake
 open Fake.AssemblyInfoFile
 
-#r @"build\Chat_Backend.dll"
+#r @"build/Chat_Backend.dll"
 open ChatBackend
 
 Target "Run" (fun _ ->
