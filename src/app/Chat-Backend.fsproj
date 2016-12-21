@@ -55,8 +55,8 @@
     <Compile Include="Domain.fs" />
     <Compile Include="Repo.fs" />
     <Compile Include="Api.fs" />
-    <None Include="app.fsx" />
     <Compile Include="Chat.fs" />
+    <Compile Include="App.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

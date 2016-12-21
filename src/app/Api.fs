@@ -11,13 +11,12 @@ module Api =
     let email_ = Domain.createEmail email
     let pass_ = Domain.createPassword pass
     Helpers.check2AndApply email_ pass_ (Domain.getToken Repo.getUser)
-      
-  let login email pass : WebPart =
-    login_ email pass |> Helpers.resultOrFail
-
 
   let private register_ : string -> string -> User option =
     Domain.createUser
+      
+  let login email pass : WebPart =
+    login_ email pass |> Helpers.resultOrFail
   
   let register email pass : WebPart =
     register_ email pass |> Helpers.resultOrFail
