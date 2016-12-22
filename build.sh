@@ -12,8 +12,13 @@ if [ $exit_code -ne 0 ]; then
   exit $exit_code
 fi
 
-command -v npm >/dev/null 2>&1 || { sudo apt-get --force-yes --yes install nodejs || brew install node; }
-
+if [ -z ${LOCAL+x} ]; then
+  echo "Building locally"
+  command -v npm >/dev/null 2>&1 || { brew install node; }
+else
+  echo "Building on CI"
+  sudo command -v npm >/dev/null 2>&1 || { sudo apt-get --force-yes --yes install nodejs; };
+fi
 npm list -g | grep elm@0.18 >/dev/null 2>&1
 
 if [ $? -ne 0 ]; then

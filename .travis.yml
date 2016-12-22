@@ -5,5 +5,8 @@ language: csharp
 services:
   - docker
 
+env:
+- LOCAL=NO
+
 script:
   - sh build.sh
