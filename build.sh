@@ -17,7 +17,10 @@ if [ -z ${LOCAL+x} ]; then
   command -v npm >/dev/null 2>&1 || { brew install node; }
 else
   echo "Building on CI"
-  sudo command -v npm >/dev/null 2>&1 || { sudo apt-get --force-yes --yes install nodejs; };
+  sudo command -v npm >/dev/null 2>&1 || { 
+      sudo add-apt-repository ppa:chris-lea/node.js;
+      sudo apt-get update;
+      sudo apt-get --force-yes --yes install nodejs; };
 fi
 npm list -g | grep elm@0.18 >/dev/null 2>&1
 
