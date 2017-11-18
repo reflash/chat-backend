@@ -1,6 +1,10 @@
 source https://nuget.org/api/v2
+
+framework: >= net461
 nuget Suave
 nuget Fake
 nuget NUnit
 nuget NUnit.Console
 nuget FsUnit
+nuget FSharp.Core
+nuget FSharp.NET.Sdk

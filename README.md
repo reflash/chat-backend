@@ -1,3 +1,6 @@
 # Chat backend in F#
 
-Server installation scripts
+## Getting started
+
+https://docs.docker.com/machine/install-machine/
+https://github.com/fsprojects/docker-fsharp

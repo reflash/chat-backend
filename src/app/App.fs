@@ -15,11 +15,9 @@ module App =
 
     //open ChatBackend.Helpers
 
-    let private config =
-        let ip = IPAddress.Parse "0.0.0.0"
-        { defaultConfig with
-            logger = Logging.Loggers.saneDefaultsFor Logging.LogLevel.Verbose
-            bindings=[ HttpBinding.mk HTTP ip 8080us ] }
+    let config =
+      { defaultConfig with
+         bindings = [ HttpBinding.create HTTP IPAddress.Loopback 8080us ] }
 
 
     let private jsonMime = Writers.setMimeType "application/json"

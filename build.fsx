@@ -1,5 +1,5 @@
 #load "init.fsx"
-#r @"FakeLib.dll"
+#r @"./packages/FAKE/tools/FakeLib.dll"
 
 open Fake
 open Fake.AssemblyInfoFile

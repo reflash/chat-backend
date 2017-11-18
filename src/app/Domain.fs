@@ -14,16 +14,7 @@ module Domain =
   type Token = Token of string
 
   let private emailRegex = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"
-  let private validateAndCreateEmail email : Email option =
-    if Regex.IsMatch(email, emailRegex)
-    then Some <| Email email
-    else None
-
   let private passRegex = "^[A-Za-z\d]{8,}$" // Nums and chars 8+
-  let private validateAndCreatePassword pass =
-    if Regex.IsMatch(pass, passRegex)
-    then Some <| Password pass
-    else None
 
   let private createUserRecord e p =
     Some { email = e; password = p; }
@@ -31,16 +22,20 @@ module Domain =
   let private checkPassword pass user : Token option =
     if user.password = pass then Some <| Token "A" else None
 
-  let createEmail =
-    validateAndCreateEmail
+  let createEmail email : Email option =
+    if Regex.IsMatch(email, emailRegex)
+    then Some <| Email email
+    else None
 
-  let createPassword =
-      validateAndCreatePassword
+  let createPassword pass =
+    if Regex.IsMatch(pass, passRegex)
+    then Some <| Password pass
+    else None
 
-  let createUser email pass = 
+  let createUser email pass =
     let email = createEmail email
     let pass = createPassword pass
-    Helpers.check2AndApply email pass createUserRecord 
-    
-  let getToken (getUser:Email -> User option) email pass = 
+    Helpers.check2AndApply email pass createUserRecord
+
+  let getToken (getUser:Email -> User option) email pass =
     email |> ( getUser >=> checkPassword pass )

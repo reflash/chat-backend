@@ -14,10 +14,9 @@ module Api =
 
   let private register_ : string -> string -> User option =
     Domain.createUser
-      
+
   let login email pass : WebPart =
     login_ email pass |> Helpers.resultOrFail
-  
+
   let register email pass : WebPart =
     register_ email pass |> Helpers.resultOrFail
-

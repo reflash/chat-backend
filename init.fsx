@@ -1,10 +1,12 @@
 // include Fake lib
-#r @"FakeLib.dll"
+#r @"./packages/FAKE/tools/FakeLib.dll"
 
 
 open Fake
 open Fake.AssemblyInfoFile
 open Fake.Testing.NUnit3
+
+open System
 
 RestorePackages()
 
@@ -19,6 +21,30 @@ let elmDir = @"./src/"
 // version info
 let version = "0.2"  // or retrieve from CI server
 
+let appReferences = !! "/**/*.fsproj"
+let dotnetcliVersion = "2.0.0"
+let mutable dotnetExePath = "dotnet"
+
+// Helpers
+let run' timeout cmd args dir =
+    if execProcess (fun info ->
+        info.FileName <- cmd
+        if not (String.IsNullOrWhiteSpace dir) then
+            info.WorkingDirectory <- dir
+        info.Arguments <- args
+    ) timeout |> not then
+        failwithf "Error while running '%s' with args: %s" cmd args
+
+let run = run' System.TimeSpan.MaxValue
+
+let runDotnet workingDir args =
+    let result =
+        ExecProcess (fun info ->
+            info.FileName <- dotnetExePath
+            info.WorkingDirectory <- workingDir
+            info.Arguments <- args) TimeSpan.MaxValue
+    if result <> 0 then failwithf "dotnet %s failed" args
+
 // Targets
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; testDir; deployDir]
@@ -32,6 +58,18 @@ Target "SetVersions" (fun _ ->
          Attribute.Product "Chat"
          Attribute.Version version
          Attribute.FileVersion version]
+)
+
+Target "InstallDotNetCLI" (fun _ ->
+    dotnetExePath <- DotNetCli.InstallDotNetSDK dotnetcliVersion
+)
+
+Target "Restore" (fun _ ->
+    appReferences
+    |> Seq.iter (fun p ->
+        let dir = System.IO.Path.GetDirectoryName p
+        runDotnet dir "restore"
+    )
 )
 
 Target "CompileApp" (fun _ ->
@@ -54,11 +92,10 @@ Target "NUnitTest" (fun _ ->
                    OutputDir  = testDir + "TestResults.xml" })
 )
 
-// Package to docker container and run
-//  - docker build -t reflash/chat .
-//  - docker run -d -p 127.0.0.1:80:4567 reflash/chat /bin/sh -c "cd /root/chat; bundle exec foreman start;"
-//  - docker ps -a
-//  - docker run reflash/chat /bin/sh -c "cd /root/chat; bundle exec rake test"
+Target "CompileElm" (fun _ ->
+    Shell.Exec("elm-make", "src/Main.elm --output build/Main.js --yes", "src/frontend")
+    |> ignore
+)
 
 Target "Copy" (fun _ ->
     !! (buildDir + "\**\*.*")
@@ -66,15 +103,13 @@ Target "Copy" (fun _ ->
         |> Zip buildDir (deployDir + "chat-backend." + version + ".zip")
 )
 
-Target "CompileElm" (fun _ ->
-    Shell.Exec("elm-make", "src/Main.elm --output build/Main.js --yes", "src/frontend")
-    |> ignore
-)
 
 
 // Build and pack
 "Clean"
   ==> "SetVersions"
+  ==> "InstallDotNetCLI"
+  ==> "Restore"
   ==> "CompileApp"
   ==> "CompileTest"
   ==> "NUnitTest"
